@@ -4,7 +4,7 @@ title: Home
 ---
 
 <a id="top"></a>
-# Gesture and AI Workshop
+# Gesture and Generative AI in NIME Design
 ## [New Interfaces for Musical Expression (NIME)](https://nime2025.org/), June 24th-27, 2025
 
 |[**Top**](#top)|[**Schedule**](#schedule)|[**Demo**](#demo)|[**Links**](#links) 
@@ -68,7 +68,7 @@ Participants are expected to bring their own computers (Linux, Windows, or MacOS
 
 [Install the Visual Studio Code Development Environment](https://code.visualstudio.com)
 
-## Readings: Gesture-Controlled NIMEs
+## Readings: Gesture and AI-Controlled NIMEs
 ### Gesture in Music Performance
 [Wireless Sensor Interface and Gesture-Follower for Music Pedagogy](http://www.nime.org/proceedings/2007/nime2007_124.pdf)
 
