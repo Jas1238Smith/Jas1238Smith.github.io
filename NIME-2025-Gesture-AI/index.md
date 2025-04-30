@@ -62,13 +62,14 @@ Participants are expected to bring their own computers (Linux, Windows, or MacOS
 ## Tools & Development Environments
 [Install Python](https://www.python.org)
 
-[Pure Data](https://puredata.info)
+[Install Pure Data](https://puredata.info)
 
-[Anaconda Python Development Environment](https://www.anaconda.com)
+[Install the Anaconda Python Development Environment](https://www.anaconda.com)
 
-[Visual Studio Code Development Environment](https://code.visualstudio.com)
+[Install the Visual Studio Code Development Environment](https://code.visualstudio.com)
 
-## Gesture in Music Performance
+## Readings: Gesture-Controlled NIMEs
+### Gesture in Music Performance
 [Wireless Sensor Interface and Gesture-Follower for Music Pedagogy](http://www.nime.org/proceedings/2007/nime2007_124.pdf)
 
 [Multimodal Analysis of Expressive Gesture in Music and Dance Performances](https://link.springer.com/chapter/10.1007/978-3-540-24598-8_3)
@@ -83,7 +84,6 @@ Participants are expected to bring their own computers (Linux, Windows, or MacOS
 
 [A Methodological Framework for Teaching, Evaluating and Informing NIME Design with a Focus on Expressiveness and Mapping](https://www.nime.org/proceedings/2014/nime2014_472.pdf)
 
-## Gesture-Controlled NIMEs
 ### Sensors and Multitiouch Devices
 [Hands On --- A New Work from SLABS Controller and Generative Algorithms](https://www.nime.org/proceedings/2009/nime2009_335.pdf)
 
@@ -118,7 +118,6 @@ Participants are expected to bring their own computers (Linux, Windows, or MacOS
 [GrooveTransformer: A Generative Drum Sequencer Eurorack Module](https://nime.org/proceedings/2024/nime2024_39.pdf)
 
 ### AI in NIME Development
-
 [From Mondrian to Modular Synth: Rendering NIME using Generative Adversarial Networks](https://www.nime.org/proceedings/2019/nime2019_paper052.pdf)
 
 [Participatory Conceptual Design of Accessible Digital Musical Instruments using Generative AI](https://nime.org/proceedings/2023/nime2023_83.pdf)
