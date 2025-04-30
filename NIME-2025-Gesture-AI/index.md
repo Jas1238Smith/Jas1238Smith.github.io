@@ -3,6 +3,13 @@ layout: default
 title: Home
 ---
 
+<style>
+h1:first-of-type {
+  display: none;
+}
+</style>
+
+
 <a id="top"></a>
 # Gesture and Generative AI in NIME Design
 ## [New Interfaces for Musical Expression (NIME)](https://nime2025.org/), June 24th-27, 2025
