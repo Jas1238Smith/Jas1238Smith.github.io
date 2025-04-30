@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Home
+title: Gesture and Generative AI in NIME Design
 ---
 
 <style>
