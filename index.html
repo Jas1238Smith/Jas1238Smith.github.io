@@ -1,87 +1,964 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <style>
-        h1 {text-align: center;}
-        p {text-align: center;}
-        div {text-align: center;}
-        body { font-family: 'Courier New', Courier, monospace;}
-        ul { list-style-position: inside; text-align: center;}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jason Brent Smith — Music Technology Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #09090d;
+    --surface:  #111118;
+    --border:   #222230;
+    --gold:     #c8a45e;
+    --gold-dim: #8a6e3a;
+    --text:     #ece7dc;
+    --muted:    #6b6b80;
+    --faint:    #1c1c28;
+    --serif:    'Cormorant', Georgia, serif;
+    --sans:     'DM Sans', system-ui, sans-serif;
+    --mono:     'Space Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 4rem;
+    background: rgba(9,9,13,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+  }
+  nav.scrolled { border-color: var(--border); }
+  .nav-name {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  #hero-canvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    opacity: 0.35;
+  }
+  .hero-body {
+    position: relative; z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    padding-top: 7rem;
+  }
+  .hero-content {
+    display: flex; flex-direction: column;
+    justify-content: center;
+  }
+  .hero-photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-photo-frame {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 3 / 4;
+    border: 1px solid var(--border);
+    background: var(--faint);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-photo-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-photo-frame .photo-placeholder {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-align: center;
+    line-height: 2;
+  }
+  /* Subtle corner accent on the photo frame */
+  .hero-photo-frame::before,
+  .hero-photo-frame::after {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--gold-dim);
+    border-style: solid;
+    opacity: 0.6;
+    z-index: 1;
+  }
+  .hero-photo-frame::before { top: -1px; left: -1px; border-width: 1px 0 0 1px; }
+  .hero-photo-frame::after  { bottom: -1px; right: -1px; border-width: 0 1px 1px 0; }
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .hero-name {
+    font-family: var(--serif);
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.25rem;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .hero-tagline {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 3rem;
+    line-height: 1.75;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 2rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid;
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+  .btn-primary { border-color: var(--gold); color: var(--gold); }
+  .btn-primary:hover { background: var(--gold); color: var(--bg); }
+  .btn-secondary { border-color: var(--border); color: var(--muted); }
+  .btn-secondary:hover { border-color: var(--muted); color: var(--text); }
+ 
+  .hero-scroll {
+    position: relative; z-index: 1;
+    display: flex; align-items: center; gap: 1rem;
+    padding-bottom: 2.5rem;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .hero-scroll::before {
+    content: '';
+    display: block; width: 40px; height: 1px;
+    background: var(--border);
+  }
+ 
+  /* ── SECTIONS ── */
+  section { padding: 7rem 4rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+ 
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1; max-width: 60px;
+    height: 1px;
+    background: var(--gold-dim);
+    opacity: 0.5;
+  }
+ 
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 3rem;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+ 
+  /* ── NAV AVATAR ── */
+  .nav-identity { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; }
+  .nav-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--gold-dim);
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--faint);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 0.6rem; color: var(--muted);
+  }
+  /* TODO: <img src="photo.jpg" style="width:100%;height:100%;object-fit:cover"> inside .nav-avatar */
+ 
+  /* ── STAT BAR ── */
+  #stat-bar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: center;
+  }
+  .stat-bar-inner {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 900px;
+    width: 100%;
+    divide-x: var(--border);
+  }
+  .stat-bar-item {
+    padding: 2.5rem 2rem;
+    text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .stat-bar-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--gold);
+    display: block;
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 7rem 4rem; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1; max-width: 60px;
+    height: 1px;
+    background: var(--gold-dim);
+    opacity: 0.5;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 3rem;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  #education { background: var(--faint); }
+  .edu-list { display: flex; flex-direction: column; }
+  .edu-item {
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .edu-year {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--gold-dim);
+    padding-top: 0.2rem;
+  }
+  .edu-role {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 0.2rem;
+  }
+  .edu-place {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 0.2rem;
+  }
+  .edu-detail {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ── RESEARCH ── */
+  #research { }
+  .featured-project {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    margin-bottom: 5rem;
+    padding-bottom: 5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .featured-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+  .featured-title {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+  .featured-title em { font-style: italic; color: var(--gold); }
+  .featured-desc { color: var(--muted); margin-bottom: 1.75rem; }
+  .tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-bottom: 1.75rem;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 2px;
+  }
+  .featured-visual {
+    aspect-ratio: 4/3;
+    background: var(--faint);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .project-card {
+    background: var(--bg);
+    padding: 2rem;
+    transition: background 0.25s;
+  }
+  .project-card:hover { background: var(--faint); }
+  .project-num {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--gold-dim);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .project-title {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .project-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+  /* ── PUBLICATIONS ── */
+  #publications { background: var(--surface); }
+  .pub-list { list-style: none; }
+  .pub-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+  .pub-year {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--gold-dim);
+    padding-top: 0.2rem;
+    min-width: 3rem;
+  }
+  .pub-title {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+  }
+  .pub-venue {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .pub-authors { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.25rem; }
+  .pub-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .pub-link:hover { border-color: var(--gold); }
+
+  /* ── TEACHING / COLLAB ── */
+  #collaboration { }
+  .collab-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+  .collab-block h3 {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin-bottom: 1.25rem;
+  }
+  .collab-block h3 em { font-style: italic; color: var(--gold); }
+  .collab-block p { color: var(--muted); margin-bottom: 1rem; font-size: 0.95rem; }
+  .collab-list { list-style: none; }
+  .collab-list li {
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .collab-list li::before {
+    content: '—';
+    color: var(--gold-dim);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--surface); text-align: center; }
+  .contact-intro {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3vw, 2.6rem);
+    font-weight: 300;
+    line-height: 1.3;
+    max-width: 620px;
+    margin: 0 auto 2.5rem;
+  }
+  .contact-intro em { font-style: italic; color: var(--gold); }
+  .contact-email {
+    display: block;
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--gold);
+    text-decoration: none;
+    margin-bottom: 3rem;
+    letter-spacing: 0.05em;
+    transition: opacity 0.2s;
+  }
+  .contact-email:hover { opacity: 0.75; }
+  .contact-links {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    section { padding: 5rem 1.5rem; }
+    #hero { padding: 0 1.5rem; }
+    .about-grid, .featured-project, .collab-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-stats { grid-template-columns: repeat(3, 1fr); }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+  @media (max-width: 600px) {
+    .nav-links { display: none; }
+    .hero-name { font-size: 2.8rem; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+  }
+</style>
 </head>
 <body>
-<h1>Jason Brent Smith</h1>
-    <p><a href="https://linkedin.com/in/jason-smith-009880142">Linkedin</a></p>
-    <p><a href="https://scholar.google.com/citations?user=1R0IoRMAAAAJ">Publications</a></p>
-    <p><a href="images/Jason Smith CV - Oct 2024.pdf">CV</a></p>
-<div style="background-color: lightgrey;">
-    <h2>About Me</h2>
-    <h3> Research </h3>
-        <p> I am a researcher interested in Human-AI Cocreativity. I have conducted research in a variety of areas related to AI-supported creativity: </p>
-        <ul>
-            <li> AI-based Interactive Music Systems </li>
-            <li> Gesture Recognition </li>
-            <li> Conversational Agents </li>
-            <li> Accessible Technology </li>
-            <li> Prosthetics for Musical Performance </li>
-            <li> AI-based Scene Generation </li>
-        </ul>
-    <h3> Teaching </h3>
-        <p> My goal in teaching and research mentorship is to provide students with skills they can use in industry and interdisciplinary research with a constructionist, project-based approach. </p>
-        <ul>
-        <li><b>Collaboration:</b> I encourage students to work together with others whose skills complement their own. </li>
-        <li><b>Creativity:</b> I encourage students to work within the limitations of a course to develop projects they find useful to their research careers. </li>
-        </ul>
-    <h3> Biography </h3>
-        <p>
-            I am currently a Postdoctoral Scholar at Northwestern University in Evanston, Illinois.
-            I work under Dr. Bryan Pardo at the Interactive Audio Lab in the Northwestern University Computer Science Department.
-            I earned my BS in Music Engineering and Technology at the University of Miami in Miami, Florida in 2018.
-            I earned my MS and Ph.D. in Music Technology at the Georgia Institute of Technology in Atlanta, Georgia in 2024.
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-name">Jason Brent Smith</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#collaboration">Teaching</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-body">
+    <div class="hero-content">
+      <p class="hero-tag">Music Technology · Human-AI Interaction · Multimodal AI </p>
+      <h1 class="hero-name">
+        Human-AI <em>Partnerships</em> <br>
+        and <em>Synchrony</em>.
+      </h1>
+      <p class="hero-tagline">
+        I am a Postdoctoral Scholar at the Northwestern University Interactive Audio Lab. My research is about rethinking interfaces in the age of AI to support inclusion, creativity, and expressivity.
+      </p>
+      <div class="hero-cta">
+        <a href="#research" class="btn btn-primary">View Research</a>
+        <a href="images/Jason Smith CV - May 2026.pdf" class="btn btn-secondary" target="_blank">Download CV</a>
+    </div>
+    </div>
+    <!-- <div class="hero-photo">
+      <div class="hero-photo-frame">
+        <img src="images/photo.jpg" alt="Jason Brent Smith">
+      </div>
+    </div> -->
+  </div>
+  <div class="hero-scroll">Scroll to explore</div>
+</section>
+ 
+<!-- STAT BAR -->
+<div id="stat-bar">
+  <div class="stat-bar-inner">
+    <div class="stat-bar-item">
+      <span class="stat-num">22</span>
+      <span class="stat-label">Publications</span>
+    </div>
+    <div class="stat-bar-item">
+      <span class="stat-num">8</span>
+      <span class="stat-label">Years Research</span>
+    </div>
+    <div class="stat-bar-item">
+      <span class="stat-num">>30</span>
+      <span class="stat-label">Collaborators</span>
+    </div>
+  </div>
+</div>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="section-inner">
+    <p class="section-label">Research</p>
+    <h2 class="section-title">Making AI <em>responsive</em><br>to human creativity.</h2>
+
+    <!-- FEATURED PROJECT -->
+    <div class="featured-project">
+      <div>
+        <p class="featured-label">Primary Research</p>
+        <h3 class="featured-title">Gesture Recognition &amp;<br><em>Prediction</em> for Live<br>Generative Music</h3>
+        <p class="featured-desc">
+          Developing machine learning models that recognize and anticipate performer gestures in real time, enabling fluid, low-latency control of generative AI music systems in live performance contexts. This work rethinks the performer–system relationship from reactive to anticipatory.
         </p>
-</div>
-<div style="background-color: darkgray;">
-    <h2>Projects</h2>
-        <div style="background-color: darkgray;">
-            <h3> Gestural Recognition & Human-AI Interaction </h3>
-                <p> To explore how human musicians perceive the AI components of systems they use to perform, I developed multiple AI-based Interactive Music Systems as part of my dissertation titled "Human-AI Partnerships in Gesture-Controlled Interactive Music Systems." </p>
-                <h4> Publications </h4>
-                    <ul>
-                        <li> Smith, Jason, and Freeman, Jason (2023). “Effects of Visual Explanation on Perceived Creative Autonomy in an AI-Based Generative Music System.” In IUI '23 Companion: Companion Proceedings of the 28th International Conference on Intelligent User Interfaces </li>
-                        <li> Smith, Jason and Freeman, Jason (2022). “Human-AI Partnerships in Generative Music.” In the 21st International Conference on New Interfaces for Musical Expression </li>
-                        <li> Smith, Jason, and Freeman, Jason (2021). "Effects of Deep Neural Networks on the Perceived Creative Autonomy of a Generative Musical System." In Proceedings of the 17th AAAI Conference on Artificial Intelligence and Interactive Digital Entertainment </li>
-                    </ul>
+        <a href="#publications" class="btn btn-primary">View Related Publications</a>
+      </div>
+      <div class="featured-visual">
+        <!-- <canvas id="gesture-canvas"></canvas> -->
+        <video src="images/Gesture_Vocabulary_Demo.mp4" playsinline controls style="width:100%;height:100%;object-fit:contain;display:block;"></video>
+      </div>
+    </div>
+
+    <!-- OTHER PROJECTS -->
+    <div class="projects-grid">
+      <div class="project-card">
+        <span class="project-num">01</span>
+        <h3 class="project-title">Accessibility for Education, Musicianship, and Software Development</h3>
+        <ul>
+        <li><p class="project-desc">Multi-stage co-design research in making the EarSketch learning platform more <em>accessible for Blind and Visually Impaired (BVI) learners.</em></p></li>
+        <li><p class="project-desc">Development of <em>machine learning-controlled prosthetic limbs</em> for expressive musical control.</p></li>
+        </ul>
+      </div>
+      <div class="project-card">
+        <span class="project-num">02</span>
+        <h3 class="project-title">Co-Creative Agents</h3>
+        <ul>
+          <li><p class="project-desc">Research and development of an <em>experiemental conversational agent</em>, a Co-Creative AI (CAI), to support users of the EarSketch learning platform in writing code and music.</p></li>
+          <li><p class="project-desc">Research and development of the AI Holodeck, an AI-supported 3D scene generation.</p></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="section-inner">
+    <p class="section-label">Publications</p>
+    <h2 class="section-title">Selected <em>Works</em></h2>
+
+    <ul class="pub-list" id="pub-list">
+      <li style="padding: 2rem 0; color: var(--muted); font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em;">
+        Loading publications…
+      </li>
+    </ul>
+
+    <div style="margin-top: 2rem;">
+      <a id="scholar-link" href="https://scholar.google.com/citations?user=1R0IoRMAAAAJ" target="_blank" class="btn btn-secondary">Full list on Google Scholar ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHING & COLLABORATION -->
+<section id="collaboration">
+  <div class="section-inner">
+    <p class="section-label">Teaching &amp; Collaboration</p>
+    <h2 class="section-title">Building <em>communities</em><br>of practice.</h2>
+    <div class="collab-grid">
+      <div class="collab-block">
+        <h3>Teaching &amp; <em>Mentorship</em></h3>
+        <p>My goal in teaching and research mentorship is to provide students with skills they can use in industry and interdisciplinary research with a constructionist, project-based approach. Courses and workshops I have taught or assisted include:</p>
+        <ul class="collab-list">
+          <li>CS 352: Machine Perception of Music and Audio — Northwestern University, Spring 2026 <a href="https://jas1238smith.github.io/cs352-public">link</a></li>
+          <li>Workshop on Gesture and Generative AI in NIME Design at the International Conference on New Interfaces for Musical Expression (NIME 2025), June 2025 <a href="https://nime2025.org/proceedings/336.html">link</a> </li>
+          <li>3rd Workshop on Intelligent Music Interfaces for Listening and Creation (MILC) at the 28th International Conference on Intelligent User Interfaces (IUI 2023), March 2023 <a href="https://milc2023.github.io/">link</a> </li>
+          <li>MUSI 6106: Audio Software Engineering — Georgia Institute of Technology, Spring 2022 <a href="https://catalog.gatech.edu/coursesaz/musi/">link</a></li>
+          <li>MUSI 6002: Interactive Music — Georgia Institute of Technology, Fall 2021 <a href="https://catalog.gatech.edu/coursesaz/musi/">link</a></li>
+        </ul>
+      </div>
+      <div class="collab-block">
+        <h3>Affiliations &amp; <em>Collaborations</em></h3>
+        <p>I have worked within and across large interdisciplinary research groups, including:</p>
+        <ul class="collab-list">
+          <li>Interactive Audio Lab, Northwestern University <a href="https://interactiveaudiolab.github.io/">link</a></li>
+          <li>Computational Music for All Lab, Georgia Institute of Technology <a href="https://compmusic4all.gatech.edu/">link</a></li>
+          <li>Expressive Machinery Lab, Georgia Institute of Technology <a href="https://expressivemachinery.gatech.edu/">link</a></li>
+          <li>Robotic Musicianship Group, Georgia Institute of Technology <a href="https://gtcmt.gatech.edu/robotic-musicianship">link</a></li>
+          <li>Functional Outcomes Research Evaluation (FORE) Center, University of Miami <a href="https://med.miami.edu/departments/physical-therapy/research/fore-center">link</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-inner">
+    <p class="section-label">Education & Positions</p>
+    <h2 class="section-title">Academic <em>Background</em></h2>
+
+    <div class="edu-list">
+
+      <div class="edu-item">
+        <span class="edu-year">2024–present</span>
+        <div>
+          <p class="edu-role">Postdoctoral Scholar</p>
+          <p class="edu-place">Northwestern University, Department of Computer Science</p>
+          <p class="edu-detail">Supervisor: Prof. Bryan Pardo</p>
         </div>
-        <div style="background-color: lightgray;">
-            <h3> EarSketch </h3>
-            <p> <a href="https://earsketch.gatech.edu/earsketch2/">EarSketch</a> is an online learning environment for coding and music education that I contributed to as a Graduate Research Assistant at Georgia Tech and Postdoctoral Scholar at Northwestern University. I contributed to two research projects: </p>
-            <h4> EarSketch CAI </h4>
-            Georgia Tech and the University of Florida collaborated on research and development of an experiemental conversational agent, a Co-Creative AI (CAI), to support EarSketch users in writing code and music.
-            <h5> Publications </h5>
-            <ul>
-                <li> Rahimi, S., Smith, J.B., Truesdell, E.J.K., Vinay, A., Boyer, K.E., Magerko, B., Freeman, J., and McKlin, T. (2023). “Validity and Fairness of an Automated Assessment of Creativity in Computational Music Remixing.” Workshop on Automated Assessment and Guidance of Project Work at the 24th International Conference on Artificial Intelligence in Education</li>
-                <li> Smith, J. B., Vinay, A., & Freeman, J. (2023). “The Impact of Salient Musical Features in a Hybrid Recommendation System for a Sound Library.” In the 3rd Workshop on Intelligent Music Interfaces for Listening and Creation (MILC) as part of the 28th International Conference on Intelligent User Interfaces </li>
-                <li> Truesdell, Erin JK, et al. (2021). "Supporting Computational Music Remixing with a CoCreative Learning Companion." In Proceedings of the 2021 International Conference on Computational Creativity </li>
-                <li> Smith, J., Truesdell, E., Freeman, J., Magerko, B., Boyer, K. E., & McKlin, T. (2020). “Modeling Music and Code Knowledge to Support a Co-Creative AI Agent for Education.” In Proceedings of the 21st International Society for Music Information Retrieval </li>
-                <li> Smith, J., Jacob, M., Freeman, J., Magerko, B., & Mcklin, T. (2019). “Combining Collaborative and Content Filtering in a Recommendation System for a Web-based DAW.” In Proceedings of the 5th International Web Audio Conference </li>
-                <li> Smith, J., Weeks, D., Jacob, M., Freeman, J., & Magerko, B. (2019). “Towards a Hybrid Recommendation System for a Sound Library.” In the 1st Workshop on Intelligent Music Interfaces for Listening and Creation (MILC) as part of the 28th International Conference on Intelligent User Interfaces </li>
-            </ul>
-            <h4> Accessible EarSketch </h4>
-            Georgia Tech, Northwestern University, and the University of North Texas have collaborated on multi-stage research in making EarSketch more accessible for Blind and Visually Impaired (BVI) learners.
-            <h5> Publications </h5>
-            <ul>
-                <li> Ding, S., Smith, J. B., Garrett, S., & Magerko, B. (2024). Redesigning EarSketch for Inclusive CS Education: A Participatory Design Approach. In Proceedings of the 23rd Annual ACM Interaction Design and Children Conference. </li>
-                <li> Garrett, S., Smith, J. B., Blue, A., Ondin Z., Rempel, J., Mumma, K., Freeman, J., and Magerko, B. (2024). “Improving the Accessibility of the EarSketch Web-Based Audio Application for Blind and Visually Impaired Learners.” In Proceedings of the International Web Audio Conference </li>
-            </ul>
+      </div>
+
+      <div class="edu-item">
+        <span class="edu-year">2020–2024</span>
+        <div>
+          <p class="edu-role">PhD, Music Technology, Minor in Human-AI Interaction</p>
+          <p class="edu-place">Georgia Institute of Technology</p>
+          <p class="edu-detail">Dissertation: "Human-AI Partnerships in Gesture-Controlled Interactive Music Systems" — Advisor: Prof. Jason Freeman</p>
         </div>
-        <div style="background-color: darkgray;">
-            <h3> Prosthetic Limbs for Musicians </h3>
-                <p> As part of the Georgia Tech Robotic Musicicianship Group, I assisted in the development of two prosthetic limbs for musicians: </p>
-                <h4> Skywalker: Five-Fingered Control </h4>
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/UwsrzCVZAb8?si=ZutrA4cSb5ICu5h8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                <h4> Robotic Prosthetic Drumming Arm </h4>
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/4O-rqn3BD7I?si=5fobJIgPbsgIhpiG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+
+      <div class="edu-item">
+        <span class="edu-year">2018–2020</span>
+        <div>
+          <p class="edu-role">MS, Music Technology</p>
+          <p class="edu-place">Georgia Institute of Technology</p>
+          <p class="edu-detail">Advisor: Prof. Gil Weinberg</p>
         </div>
-</div>
+      </div>
+
+      <div class="edu-item">
+        <span class="edu-year">2014–2018</span>
+        <div>
+          <p class="edu-role">BS, Music Engineering & Technology, Minor in Computer Engineering</p>
+          <p class="edu-place">University of Miami</p>
+          <p class="edu-detail"></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-label">Contact</p>
+    <!-- <p class="contact-intro">
+    </p> -->
+    <a href="mailto:jason.smith1@northwestern.edu" class="contact-email">jason.smith1@northwestern.edu</a>
+    <div class="contact-links">
+      <a href="https://scholar.google.com/citations?user=1R0IoRMAAAAJ" target="_blank" class="btn btn-secondary">Google Scholar</a>
+      <a href="https://github.com/Jas1238Smith" target="_blank" class="btn btn-secondary">GitHub</a>
+      <a href="https://linkedin.com/in/jason-smith-009880142" target="_blank" class="btn btn-secondary">LinkedIn</a>
+      <a href="images/Jason Smith CV - May 2026.pdf" target="_blank" class="btn btn-primary">Download CV</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>Jason Brent Smith · Music Technology Research</span>
+  <span>Northwestern University · Evanston, Illinois</span>
+</footer>
+
+<script>
+/* ── NAV scroll effect ── */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+
+/* ── HERO WAVEFORM CANVAS ── */
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let mouse = { x: 0.5, y: 0.5 };
+  let W, H;
+ 
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+ 
+  document.addEventListener('mousemove', e => {
+    mouse.x = e.clientX / window.innerWidth;
+    mouse.y = e.clientY / window.innerHeight;
+  });
+ 
+  const lines = 5;
+  let t = 0;
+ 
+  /* ── Gesture traces ── */
+  function sampleCubic(p0, p1, p2, p3, steps) {
+    const pts = [];
+    for (let i = 0; i <= steps; i++) {
+      const s = i / steps, ms = 1 - s;
+      pts.push({
+        x: ms*ms*ms*p0.x + 3*ms*ms*s*p1.x + 3*ms*s*s*p2.x + s*s*s*p3.x,
+        y: ms*ms*ms*p0.y + 3*ms*ms*s*p1.y + 3*ms*s*s*p2.y + s*s*s*p3.y,
+      });
+    }
+    return pts;
+  }
+ 
+  function makeTrace() {
+    /* Anchor start points to feel like a hand moving across the space */
+    const anchors = [
+      { x: W * 0.08, y: H * 0.75 },
+      { x: W * 0.15, y: H * 0.55 },
+      { x: W * 0.22, y: H * 0.82 },
+      { x: W * 0.05, y: H * 0.42 },
+    ];
+    const p0 = anchors[Math.floor(Math.random() * anchors.length)];
+    const sweep = W * (0.25 + Math.random() * 0.35);
+    const rise  = H  * (0.15 + Math.random() * 0.35);
+    const p3 = { x: p0.x + sweep, y: p0.y - rise };
+    /* Control points create expressive arc shapes */
+    const p1 = {
+      x: p0.x + sweep * (0.15 + Math.random() * 0.25),
+      y: p0.y - rise  * (0.6  + Math.random() * 0.5),
+    };
+    const p2 = {
+      x: p3.x - sweep * (0.1  + Math.random() * 0.2),
+      y: p3.y + rise  * (0.1  + Math.random() * 0.3),
+    };
+    return {
+      pts:    sampleCubic(p0, p1, p2, p3, 90),
+      prog:   0,
+      alpha:  0,
+      hold:   0,
+      phase:  'drawing',
+      speed:  0.0035 + Math.random() * 0.003,
+      width:  0.9  + Math.random() * 1.1,
+    };
+  }
+ 
+  const traces = [];
+  for (let i = 0; i < 4; i++) {
+    const tr = makeTrace();
+    tr.prog  = Math.random();   /* stagger so they don't all start together */
+    tr.alpha = 0.3 + Math.random() * 0.2;
+    traces.push(tr);
+  }
+ 
+  function drawTraces() {
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+ 
+    for (let i = 0; i < traces.length; i++) {
+      const tr = traces[i];
+ 
+      if (tr.phase === 'drawing') {
+        tr.prog  = Math.min(1, tr.prog + tr.speed);
+        tr.alpha = Math.min(0.45, tr.alpha + 0.015);
+        if (tr.prog >= 1) { tr.phase = 'holding'; tr.hold = 0; }
+      } else if (tr.phase === 'holding') {
+        tr.hold++;
+        if (tr.hold > 80) tr.phase = 'fading';
+      } else {
+        tr.alpha -= 0.006;
+        if (tr.alpha <= 0) { traces[i] = makeTrace(); continue; }
+      }
+ 
+      const end = Math.floor(tr.prog * (tr.pts.length - 1));
+      if (end < 2) continue;
+ 
+      ctx.beginPath();
+      ctx.strokeStyle = `rgba(200, 164, 94, ${tr.alpha})`;
+      ctx.lineWidth   = tr.width;
+      ctx.moveTo(tr.pts[0].x, tr.pts[0].y);
+      for (let j = 1; j <= end; j++) ctx.lineTo(tr.pts[j].x, tr.pts[j].y);
+      ctx.stroke();
+ 
+      /* Small glowing tip dot while the trace is drawing itself */
+      if (tr.phase === 'drawing') {
+        const tip = tr.pts[end];
+        ctx.beginPath();
+        ctx.arc(tip.x, tip.y, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(200, 164, 94, ${Math.min(1, tr.alpha * 2)})`;
+        ctx.fill();
+      }
+    }
+  }
+ 
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    for (let l = 0; l < lines; l++) {
+      const freq   = 1.5 + l * 0.7 + mouse.x * 1.5;
+      const amp    = (H * 0.06) + (l * H * 0.02) + mouse.y * H * 0.04;
+      const phase  = t * (0.5 + l * 0.15);
+      const yBase  = H * (0.3 + l * 0.1);
+      const alpha  = 0.15 + (lines - l) * 0.08;
+ 
+      ctx.beginPath();
+      ctx.strokeStyle = `rgba(200, 164, 94, ${alpha})`;
+      ctx.lineWidth   = 1 + (lines - l) * 0.3;
+ 
+      for (let x = 0; x <= W; x += 2) {
+        const nx  = x / W;
+        const y   = yBase
+          + Math.sin(nx * Math.PI * freq + phase) * amp
+          + Math.sin(nx * Math.PI * freq * 2.3 + phase * 0.7) * amp * 0.35;
+        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+    drawTraces();
+    t += 0.008;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+
+/* ── PUBLICATIONS: fetch from publications.json ── */
+async function loadPublications() {
+  const list = document.getElementById('pub-list');
+  try {
+    const res = await fetch('publications.json');
+    if (!res.ok) throw new Error('not found');
+    const data = await res.json();
+
+    if (!data.publications || data.publications.length === 0) {
+      list.innerHTML = '<li style="padding:2rem 0;color:var(--muted);font-size:0.9rem;">No publications found.</li>';
+      return;
+    }
+
+    /* Update Scholar profile link */
+    if (data.scholar_url) {
+      document.getElementById('scholar-link').href = data.scholar_url;
+    }
+
+    list.innerHTML = data.publications.map(pub => `
+      <li class="pub-item">
+        <span class="pub-year">${pub.year || '—'}</span>
+        <div>
+          ${pub.authors ? `<p class="pub-authors">${pub.authors}</p>` : ''}
+          <p class="pub-title">"${pub.title}"</p>
+          ${pub.venue ? `<p class="pub-venue">${pub.venue}</p>` : ''}
+          ${pub.url ? `<a href="${pub.url}" target="_blank" class="pub-link">View ↗</a>` : ''}
+        </div>
+      </li>
+    `).join('');
+
+  } catch (e) {
+    list.innerHTML = '<li style="padding:2rem 0;color:var(--muted);font-size:0.9rem;">Publications unavailable — check back soon.</li>';
+  }
+}
+loadPublications();
+</script>
 </body>
 </html>
