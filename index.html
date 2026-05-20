@@ -100,14 +100,16 @@
   .hero-photo-frame {
     width: 100%;
     max-width: 420px;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 4 / 4;
     border: 1px solid var(--border);
     background: var(--faint);
     position: relative;
     overflow: hidden;
+    border-radius: 50%;
   }
   .hero-photo-frame img {
     width: 100%; height: 100%;
+    border-radius: 50%;
     object-fit: cover;
     display: block;
   }
@@ -582,11 +584,12 @@
         <a href="images/Jason Smith CV - May 2026.pdf" class="btn btn-secondary" target="_blank">Download CV</a>
     </div>
     </div>
-    <!-- <div class="hero-photo">
+    <div class="hero-photo">
       <div class="hero-photo-frame">
-        <img src="images/photo.jpg" alt="Jason Brent Smith">
+        <img src="images/IMG_0239.jpg" style="border-radius: 50%; object-fit: cover;"  alt="Jason Brent Smith">
+
       </div>
-    </div> -->
+    </div>
   </div>
   <div class="hero-scroll">Scroll to explore</div>
 </section>
