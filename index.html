@@ -17,7 +17,7 @@
     --gold:     #c8a45e;
     --gold-dim: #8a6e3a;
     --text:     #ece7dc;
-    --muted:    #6b6b80;
+    --muted:    #9d9dbd;
     --faint:    #1c1c28;
     --serif:    'Cormorant', Georgia, serif;
     --sans:     'DM Sans', system-ui, sans-serif;
@@ -243,43 +243,6 @@
   }
   /* TODO: <img src="photo.jpg" style="width:100%;height:100%;object-fit:cover"> inside .nav-avatar */
  
-  /* ── STAT BAR ── */
-  #stat-bar {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: center;
-  }
-  .stat-bar-inner {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    max-width: 900px;
-    width: 100%;
-    divide-x: var(--border);
-  }
-  .stat-bar-item {
-    padding: 2.5rem 2rem;
-    text-align: center;
-    border-right: 1px solid var(--border);
-  }
-  .stat-bar-item:last-child { border-right: none; }
-  .stat-num {
-    font-family: var(--serif);
-    font-size: 3rem;
-    font-weight: 300;
-    color: var(--gold);
-    display: block;
-    line-height: 1;
-    margin-bottom: 0.4rem;
-  }
-  .stat-label {
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }
-
   /* ── SECTIONS ── */
   section { padding: 7rem 4rem; }
   .section-inner { max-width: 1100px; margin: 0 auto; }
@@ -422,50 +385,6 @@
   }
   .project-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
 
-  /* ── PUBLICATIONS ── */
-  #publications { background: var(--surface); }
-  .pub-list { list-style: none; }
-  .pub-item {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 2rem;
-    padding: 2rem 0;
-    border-bottom: 1px solid var(--border);
-    align-items: start;
-  }
-  .pub-year {
-    font-family: var(--mono);
-    font-size: 0.72rem;
-    color: var(--gold-dim);
-    padding-top: 0.2rem;
-    min-width: 3rem;
-  }
-  .pub-title {
-    font-family: var(--serif);
-    font-size: 1.15rem;
-    font-weight: 400;
-    margin-bottom: 0.3rem;
-  }
-  .pub-venue {
-    font-size: 0.85rem;
-    color: var(--muted);
-    font-style: italic;
-  }
-  .pub-authors { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.25rem; }
-  .pub-link {
-    display: inline-block;
-    margin-top: 0.5rem;
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gold);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s;
-  }
-  .pub-link:hover { border-color: var(--gold); }
-
   /* ── TEACHING / COLLAB ── */
   #collaboration { }
   .collab-grid {
@@ -559,7 +478,6 @@
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#research">Research</a></li>
-    <li><a href="#publications">Publications</a></li>
     <li><a href="#collaboration">Teaching</a></li>
     <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -592,24 +510,6 @@
   </div>
   <div class="hero-scroll">Scroll to explore</div>
 </section>
- 
-<!-- STAT BAR -->
-<!-- <div id="stat-bar">
-  <div class="stat-bar-inner">
-    <div class="stat-bar-item">
-      <span class="stat-num">22</span>
-      <span class="stat-label">Publications</span>
-    </div>
-    <div class="stat-bar-item">
-      <span class="stat-num">8</span>
-      <span class="stat-label">Years Research</span>
-    </div>
-    <div class="stat-bar-item">
-      <span class="stat-num">>30</span>
-      <span class="stat-label">Collaborators</span>
-    </div>
-  </div>
-</div> -->
 
 <!-- RESEARCH -->
 <section id="research">
@@ -625,7 +525,6 @@
         <p class="featured-desc">
           Developing machine learning models that recognize and anticipate performer gestures in real time, enabling fluid, low-latency control of generative AI music systems in live performance contexts. This work rethinks the performer–system relationship from reactive to anticipatory.
         </p>
-        <a href="#publications" class="btn btn-primary">View Related Publications</a>
       </div>
       <div class="featured-visual">
         <!-- <canvas id="gesture-canvas"></canvas> -->
