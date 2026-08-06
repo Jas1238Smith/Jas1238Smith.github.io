@@ -909,44 +909,6 @@ window.addEventListener('scroll', () => {
   draw();
 })();
 
-
-// TODO: Remove auto-pubs with manual, sorted highlights for each project.
-
-/* ── PUBLICATIONS: fetch from publications.json ── */
-async function loadPublications() {
-  const list = document.getElementById('pub-list');
-  try {
-    const res = await fetch('publications.json');
-    if (!res.ok) throw new Error('not found');
-    const data = await res.json();
-
-    if (!data.publications || data.publications.length === 0) {
-      list.innerHTML = '<li style="padding:2rem 0;color:var(--muted);font-size:0.9rem;">No publications found.</li>';
-      return;
-    }
-
-    /* Update Scholar profile link */
-    if (data.scholar_url) {
-      document.getElementById('scholar-link').href = data.scholar_url;
-    }
-
-    list.innerHTML = data.publications.map(pub => `
-      <li class="pub-item">
-        <span class="pub-year">${pub.year || '—'}</span>
-        <div>
-          ${pub.authors ? `<p class="pub-authors">${pub.authors}</p>` : ''}
-          <p class="pub-title">"${pub.title}"</p>
-          ${pub.venue ? `<p class="pub-venue">${pub.venue}</p>` : ''}
-          ${pub.url ? `<a href="${pub.url}" target="_blank" class="pub-link">View ↗</a>` : ''}
-        </div>
-      </li>
-    `).join('');
-
-  } catch (e) {
-    list.innerHTML = '<li style="padding:2rem 0;color:var(--muted);font-size:0.9rem;">Publications unavailable — check back soon.</li>';
-  }
-}
-loadPublications();
 </script>
 </body>
 </html>
