@@ -581,13 +581,12 @@
       </p>
       <div class="hero-cta">
         <a href="#research" class="btn btn-primary">View Research</a>
-        <a href="images/Jason Smith CV - May 2026.pdf" class="btn btn-secondary" target="_blank">Download CV</a>
+        <a href="images/Jason Smith CV - May 2026.pdf" class="btn btn-primary" target="_blank">Download CV</a>
     </div>
     </div>
     <div class="hero-photo">
       <div class="hero-photo-frame">
         <img src="images/IMG_0239.jpg" style="border-radius: 50%; object-fit: cover;"  alt="Jason Brent Smith">
-
       </div>
     </div>
   </div>
@@ -595,7 +594,7 @@
 </section>
  
 <!-- STAT BAR -->
-<div id="stat-bar">
+<!-- <div id="stat-bar">
   <div class="stat-bar-inner">
     <div class="stat-bar-item">
       <span class="stat-num">22</span>
@@ -610,7 +609,7 @@
       <span class="stat-label">Collaborators</span>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- RESEARCH -->
 <section id="research">
@@ -634,43 +633,27 @@
       </div>
     </div>
 
-    <!-- OTHER PROJECTS -->
-    <div class="projects-grid">
-      <div class="project-card">
-        <span class="project-num">01</span>
-        <h3 class="project-title">Accessibility for Education, Musicianship, and Software Development</h3>
+    <div class="featured-project">
+      <div>
+        <p class="featured-label">Collaborative Research</p>
+        <h3 class="featured-title">Accessibility for Education, Musicianship, and Software Development</h3>
         <ul>
         <li><p class="project-desc">Multi-stage co-design research in making the EarSketch learning platform more <em>accessible for Blind and Visually Impaired (BVI) learners.</em></p></li>
         <li><p class="project-desc">Development of <em>machine learning-controlled prosthetic limbs</em> for expressive musical control.</p></li>
         </ul>
       </div>
-      <div class="project-card">
-        <span class="project-num">02</span>
-        <h3 class="project-title">Co-Creative Agents</h3>
+    </div>
+
+    <div class="featured-project">
+      <div>
+        <p class="featured-label">Collaborative Research</p>
+        <h3 class="featured-title">Co-Creative Agents</h3>
         <ul>
           <li><p class="project-desc">Research and development of an <em>experiemental conversational agent</em>, a Co-Creative AI (CAI), to support users of the EarSketch learning platform in writing code and music.</p></li>
           <li><p class="project-desc">Research and development of the AI Holodeck, an AI-supported 3D scene generation.</p></li>
         </ul>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- PUBLICATIONS -->
-<section id="publications">
-  <div class="section-inner">
-    <p class="section-label">Publications</p>
-    <h2 class="section-title">Selected <em>Works</em></h2>
-
-    <ul class="pub-list" id="pub-list">
-      <li style="padding: 2rem 0; color: var(--muted); font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em;">
-        Loading publications…
-      </li>
-    </ul>
-
-    <div style="margin-top: 2rem;">
-      <a id="scholar-link" href="https://scholar.google.com/citations?user=1R0IoRMAAAAJ" target="_blank" class="btn btn-secondary">Full list on Google Scholar ↗</a>
-    </div>
+    </div>    
   </div>
 </section>
 
@@ -762,9 +745,9 @@
     </p> -->
     <a href="mailto:jason.smith1@northwestern.edu" class="contact-email">jason.smith1@northwestern.edu</a>
     <div class="contact-links">
-      <a href="https://scholar.google.com/citations?user=1R0IoRMAAAAJ" target="_blank" class="btn btn-secondary">Google Scholar</a>
-      <a href="https://github.com/Jas1238Smith" target="_blank" class="btn btn-secondary">GitHub</a>
-      <a href="https://linkedin.com/in/jason-smith-009880142" target="_blank" class="btn btn-secondary">LinkedIn</a>
+      <a href="https://scholar.google.com/citations?user=1R0IoRMAAAAJ" target="_blank" class="btn btn-primary">Google Scholar</a>
+      <a href="https://github.com/Jas1238Smith" target="_blank" class="btn btn-primary">GitHub</a>
+      <a href="https://linkedin.com/in/jason-smith-009880142" target="_blank" class="btn btn-primary">LinkedIn</a>
       <a href="images/Jason Smith CV - May 2026.pdf" target="_blank" class="btn btn-primary">Download CV</a>
     </div>
   </div>
@@ -926,6 +909,8 @@ window.addEventListener('scroll', () => {
   draw();
 })();
 
+
+// TODO: Remove auto-pubs with manual, sorted highlights for each project.
 
 /* ── PUBLICATIONS: fetch from publications.json ── */
 async function loadPublications() {
